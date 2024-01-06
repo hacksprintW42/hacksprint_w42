@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Group Page with Video Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            padding: 0;
+            background-color: #F8F8FF;
+        }
+        .container {
+            width: 40%;
+            margin: auto;
+            padding-top: 40px;
+        }
+        .section {
+            background-color: grey;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input[type="text"], input[type="password"], input[type="file"], input[type="date"], input[type="time"], button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+        button {
+            background-color: #800080;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .messages, .file-list {
+            height: 300px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            overflow-y: scroll;
+            padding: 10px;
+            text-align: left;
+        }
+        video {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Section -->
+        <div align="center" class="section auth-section">
+            <form class="auth-form">
+                <h2>Study Group Login</h2>
+                <input type="text" placeholder="Username" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+
+        <!-- After Login: Chat, File Sharing, Scheduling, Calendar, and Video Chat Sections -->
+        <div class="post-login-sections" style="display: none;">
+            <!-- Chat Box Section -->
+            <div class="section chat-section">
+                <h2>Chat Box</h2>
+                <div class="messages">
+                    <!-- Messages will go here -->
+                </div>
+                <input type="text" placeholder="Type a message...">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+
+            <!-- File Sharing Section -->
+            <div class="section file-section">
+                <h2>Share Files</h2>
+                <input type="file" id="fileInput">
+                <button onclick="uploadFile()">Upload</button>
+                <div class="file-list">
+                    <!-- List of files will go here -->
+                </div>
+            </div>
+
+            <!-- Scheduling and Calendar Section -->
+            <div class="section scheduling-section">
+                <h2>Schedule Study Sessions</h2>
+                <input type="date" id="sessionDate" placeholder="Select Date">
+                <input type="time" id="sessionTime" placeholder="Select Time">
+                <button onclick="scheduleSession()">Schedule Session</button>
+                <div id="calendar">Calendar view placeholder</div>
+            </div>
+
+            <!-- Video Chat Section -->
+            <div class="section video-chat-section">
+                <h2>Video Chat</h2>
+                <button onclick="redirectToVideoCall()">Start Video Call</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('.auth-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevents form from actually submitting
+            document.querySelector('.post-login-sections').style.display = 'block';
+            document.querySelector('.auth-section').style.display = 'none';
+        });
+
+        function sendMessage() {
+            const messageInput = document.querySelector('.chat-section input[type="text"]');
+            const message = messageInput.value.trim();
+            if (message) {
+                const messagesContainer = document.querySelector('.messages');
+                messagesContainer.innerHTML += '<div>' + message + '</div>';
+                messageInput.value = '';
+            }
+        }
+
+        function uploadFile() {
+            const fileList = document.querySelector('.file-list');
+            const files = document.getElementById('fileInput').files;
+            fileList.innerHTML = '';
+            for (let i = 0; i < files.length; i++) {
+                fileList.innerHTML += '<div>' + files[i].name + '</div>';
+            }
+        }
+
+        function scheduleSession() {
+            const sessionDate = document.getElementById('sessionDate').value;
+            const sessionTime = document.getElementById('sessionTime').value;
+            if (sessionDate && sessionTime) {
+                alert(`Study session scheduled on ${sessionDate} at ${sessionTime}`);
+            } else {
+                alert('Please select a date and time for the study session.');
+            }
+        }
+
+        // Function to redirect to the video call link
+        function redirectToVideoCall() {
+            window.open('https://www.studystream.live', '_blank');
+        }
+    </script>
+</body>
+</html>
